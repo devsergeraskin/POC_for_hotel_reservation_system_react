@@ -1,11 +1,11 @@
 import React from 'react';
 
-function App() {
+function Todo() {
   return (
     <div className="App">
-            Hello World;
+        Hello world
     </div>
   );
 }
 
-export default App;
+export default Todo;
