@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
+// import  Todo from './components/Todo';
 import './App.css';
-import  Todo from './components/Todo';
+import './components/SearchComponent';
+import SearchComponent from './components/SearchComponent';
+
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Todo></Todo>
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <nav className="navbar navbar-light bg-light">
+        <div className="container">
+          <a className="navbar-brand" href="#">
+          </a>
+        </div>
+      </nav>
       </header>
+      <div className="container">
+        <SearchComponent></SearchComponent>
+      </div>
     </div>
   );
 }
