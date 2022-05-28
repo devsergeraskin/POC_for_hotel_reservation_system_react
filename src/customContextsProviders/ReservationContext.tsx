@@ -1,6 +1,7 @@
-import {createContext,useContext,useState,useMemo} from 'react'
+import {createContext,useContext,useState,useMemo,useEffect} from 'react'
 // SERVICES
 import useReservationFetch from '../dataHooks/useFetch';
+import axios from "axios";
 
 // create context
 const ReservationContextState = createContext(null);
@@ -32,26 +33,53 @@ const useReservationContextState = () => {
 
 //   return context;
 // };
+type Props = {
+  children: JSX.Element,
+};
 
-const ReservationContextProvider  = (children:any)  => {
-  // the value that will be given to the context
-  const [reservation, setReservation] = useState(null);
-
-   // sign out the user, memoized
-  //  const signout = useCallback(() => {
-  //   setReservation(null);
-  // }, []);
+const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
+    // the value that will be given to the context
+    const [reservation, setReservation] = useState(null);
 
 
+    // // fetch a user from a fake backend API
+    // const {data, loading, error} = useReservationFetch('/data/reservations.json')
 
-  // fetch a user from a fake backend API
-  const {data, loading, error} = useReservationFetch('/data/reservations.json')
-  console.log(children);
-  
+    // //Memo
     const memo = useMemo(() =>
-      setReservation(data),[data]
+      setReservation(reservation),[reservation]
     );
 
+    
+    
+
+    useEffect(() => {
+      console.log(reservation)
+      const fetchUser = () => {
+        axios.get('/data/reservations.json')
+        .then((responce)=>{
+          setReservation(responce.data);
+        })
+        .catch((err)=>{
+        })
+        .finally(()=>{
+        })      
+      };
+      fetchUser();
+    }, []);
+   
+    // console.log(reservation)
+    //  if(loading) return <h1>Loading</h1>;
+     
+    //  if(error) {
+    //     console.log(error);
+    //     return <h1>Error, Data hasn't Loaded....</h1>;
+    //  }
+    
+    // console.log(data);
+    // setReservation(data);
+    console.log(reservation);
+   
 
   return (
     // the Provider gives access to the context to its children
@@ -98,4 +126,4 @@ const ReservationContextProvider  = (children:any)  => {
 //   )
 // }
 
-export { ReservationContextState , ReservationContextProvider };
+export { ReservationContextState, useReservationContextState , ReservationContextProvider };
