@@ -7,7 +7,10 @@ const SearchComponent: React.FC = () =>{
     <div>
         {/* <TextField id="standard-basic" label="Search" variant="standard" /> */}
         {/* <ResultTableComponent></ResultTableComponent> */}
+        <div className="">
         <ReservasionDetailsComponent></ReservasionDetailsComponent>
+        </div>
+       
     </div>)
 }
 
