@@ -17,7 +17,7 @@ function App() {
         </div>
       </nav>
       </header>
-      <div className="container">
+      <div className="container ">
         <SearchComponent></SearchComponent>
       </div>
     </div>

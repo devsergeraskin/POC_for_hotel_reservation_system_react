@@ -4,7 +4,6 @@ import React, { useState, useEffect } from 'react';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import Stack from '@mui/material/Stack';
 // Grid
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
@@ -12,8 +11,14 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 //UI Components
 import TextField from '@mui/material/TextField';
-import DropDownSelectComponent from './DropDownSelectComponent';
 
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+
+//CUSTOM COMPONENTS
+import DropDownSelectComponent from './DropDownSelectComponent';
+import RadioButtonsComponent from './RadioButtonsComponent';
+// import DeletableChips from './DeletableChipsComponent';
 
 
 interface ReservationTypeDetails {
@@ -89,11 +94,18 @@ const ReservationTypeDetailsState:ReservationTypeDetails = {
     "confirm": false
 }
 
-
 const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),
     
-  }));
+}));
+
+
+const PAYMENT_OPTIONS = [
+    {key:"creditCard",value:"Credit Card"},
+    {key:"payPal",value:"Pay Pal"},
+    {key:"cash",value:"Cash"},
+    {key:"BitCoin",value:"Bit Coin"}
+]
 
 
 const ReservasionDetailsComponent:React.FC = () => {
@@ -153,9 +165,10 @@ const ReservasionDetailsComponent:React.FC = () => {
                         </Item>
                     
                     </Grid>
+
                     <Grid item xs={12} direction="row" container justifyContent="flex-start">
                         <Item  elevation={0}>
-                            <DropDownSelectComponent></DropDownSelectComponent>
+                            <DropDownSelectComponent options={PAYMENT_OPTIONS}  selectedValue={'cash'}></DropDownSelectComponent>
                         </Item>
                         <Item  elevation={0}>
                             <TextField
@@ -165,6 +178,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                                 />
                         </Item>        
                     </Grid>
+
                     <Grid item xs={12} direction="row" container justifyContent="flex-start">
                         <Item  elevation={0}>
                             <TextField defaultValue={reservationDetails.firstName}
@@ -177,6 +191,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                                 />
                         </Item>
                     </Grid>
+
                     <Grid item xs={12} direction="row" container justifyContent="flex-start">
                         <Item  elevation={0}>
                             <TextField defaultValue={reservationDetails.lastName}
@@ -189,6 +204,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                                 />
                         </Item>
                     </Grid>
+
                     <Grid item xs={12} direction="row" container justifyContent="flex-start">
                         <Item  elevation={0}>
                             <TextField defaultValue={reservationDetails.email}
@@ -201,6 +217,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                                 />
                         </Item>
                     </Grid>
+                    
                     <Grid item xs={12} direction="row" container justifyContent="flex-start">
                         <Item  elevation={0}>
                             <TextField defaultValue={reservationDetails.phone}
@@ -213,6 +230,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                                 />
                         </Item>
                     </Grid>
+
                     <Grid item xs={12} direction="row" container justifyContent="flex-start">
                         <Item  elevation={0}>
                             <TextField defaultValue={reservationDetails.addressStreet.streetName}
@@ -224,18 +242,80 @@ const ReservasionDetailsComponent:React.FC = () => {
                                 inputProps={{ inputMode: "text" }}
                                 />
                         </Item>
-                        <Item  elevation={0}>
-                            <TextField defaultValue={reservationDetails.addressStreet.streetNumber}
+                    </Grid>
+
+                    {/* LOCATION */}
+                    <Grid item xs={12} direction="row" container justifyContent="flex-start">
+                    <Item  elevation={0}>
+                            <TextField defaultValue={reservationDetails.addressLocation.zipCode}
                                 onChange={handleChange}
                                 type="text"
-                                name="streetNumber"
-                                id="streetNumber"
-                                label="Street Number"
+                                name="zipCode"
+                                id="zipCode"
+                                label="Zip Code"
+                                inputProps={{ inputMode: "text" }}
+                                />
+                        </Item>
+                        <Item  elevation={0}>
+                            <TextField defaultValue={reservationDetails.addressLocation.state}
+                                onChange={handleChange}
+                                type="text"
+                                name="state"
+                                id="state"
+                                label="State"
+                                inputProps={{ inputMode: "text" }}
+                                />
+                        </Item>
+                        <Item  elevation={0}>
+                            <TextField defaultValue={reservationDetails.addressLocation.city}
+                                onChange={handleChange}
+                                type="text"
+                                name="city"
+                                id="city"
+                                label="City"
                                 inputProps={{ inputMode: "text" }}
                                 />
                         </Item>
                     </Grid>
-                </Grid>
+
+                    <Grid item xs={12} direction="row" container justifyContent="flex-start">
+                        <Item  elevation={0}>
+                            <DropDownSelectComponent options={PAYMENT_OPTIONS}  selectedValue={'cash'}></DropDownSelectComponent>
+                        </Item>
+                    </Grid>
+                 
+                    <Grid item xs={12} direction="row" container justifyContent="flex-start">
+                        <Item  elevation={0}>
+                            {/* {produceRadioButtons(PAYMENT_OPTIONS,'cash')} */}
+                            <RadioButtonsComponent options={PAYMENT_OPTIONS}  selectedValue={'cash'} ></RadioButtonsComponent>
+                            {/*@PAYMENT_OPTIONS {key:"cash",value:"Cash"}, */}
+                        </Item>
+                    </Grid>
+
+                       {/* PERSONAL NOTE */}
+                    <Grid item xs={12} direction="row" container justifyContent="flex-start">
+                       <Item  elevation={0}>
+                            <TextField defaultValue={reservationDetails.note}
+                                onChange={handleChange}
+                                type="text"
+                                name="note"
+                                id="note"
+                                label="Personal Note"
+                                inputProps={{inputMode:"text"  }}
+                                />
+                        </Item>
+                    </Grid>
+
+                     {/* TAGS*/}
+                     <Grid item xs={12} direction="row" container justifyContent="flex-start">
+                       <Item  elevation={0}>
+                           {/* <DeletableChips  tags={reservationDetails.tags} ></DeletableChips> */}
+                       </Item>
+                      
+                    </Grid>
+
+
+                </Grid> 
                 </Box>
         </LocalizationProvider>
   
