@@ -23,7 +23,6 @@ const ReservationComponent: React.FC = () =>{
     //  }
     
     // console.log(data);
-
     const [searchKeyWord,setSeatchKeyWord] = useState("");
 
     return (

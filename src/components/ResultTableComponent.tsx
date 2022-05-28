@@ -6,42 +6,46 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+import Modal from '@mui/material/Modal';
+import ReservasionDetailsComponent from './ReservasionDetailsComponent';
+import Box from '@mui/material/Box';
 // TYPES
 import {ReservationTypeDetails} from '../types/ReservationTyps';
-
+// CONTEXT
 import {useReservationContextState} from '../customContextsProviders/ReservationContext';
 
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  height: '100%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  overflow: 'scroll',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
-
-function createData(
-    name: string,
-    calories: number,
-    fat: number,
-    carbs: number,
-    protein: number,
-  ) {
-    return { name, calories, fat, carbs, protein };
-  }
-
-  const rows = [
-    createData('Frozen yoghurt', 159, 6.0, 24, 4.0),
-    createData('Ice cream sandwich', 237, 9.0, 37, 4.3),
-    createData('Eclair', 262, 16.0, 24, 6.0),
-    createData('Cupcake', 305, 3.7, 67, 4.3),
-    createData('Gingerbread', 356, 16.0, 49, 3.9),
-  ];
-
-  
 interface Props {
     filter: string;
 }
 const ResultTableComponent:React.FC<Props> = (props) =>{
     const { filter } = props;
-    const [reservations,setReservation] = useState<Array<ReservationTypeDetails> | [] >([]);
+
+    const [reservations,setReservation] = 
+    useState<Array<ReservationTypeDetails>| [] >([]);
+
+    const [selectedReservation,setSelectedReservation] = 
+    useState<ReservationTypeDetails>();
+     // modal
+     const [open, setOpen] = useState(false);
+     const handleOpen = () => setOpen(true);
+     const handleClose = () => setOpen(false);
+     // contex
     const contex = useReservationContextState(); 
 
-    // const [test,setTest] = useState(1);
 
     useEffect(() => {
         if(!contex) 
@@ -64,9 +68,9 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
         });
     }
 
-
-    const onSelectAllClick = (e: any) =>{
-      console.log(e);
+    const onDoubleClick = (e:any,reservation:ReservationTypeDetails) =>{
+      handleOpen();
+      console.log(reservation);
     }
 
     // const addelement = () => {
@@ -79,13 +83,27 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
    
     // console.log(filter);
 
-
   return  (
-    //   <div>
-    //       {addelement()}
-    //       <button  onClick={() => setTest(prev => prev + 1 )}>sada</button>
-    //   </div>
-    <TableContainer component={Paper}>
+   
+      // <div>
+      //     {/* {addelement()}
+      //     <button  onClick={() => setTest(prev => prev + 1 )}>sada</button> */}
+      //       <button  onClick={handleOpen} >sada</button> 
+      //          <Modal
+      //              open={open}
+      //              onClose={(handleClose)}
+      //              aria-labelledby="modal-modal-title"
+      //              aria-describedby="modal-modal-description"
+      //            >
+      //              <Box sx={style}>
+      //                <ReservasionDetailsComponent></ReservasionDetailsComponent>
+      //              </Box>
+             
+      //          </Modal>
+      // </div>
+      <div>
+
+<TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
@@ -99,13 +117,17 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
         </TableHead>
         <TableBody>
           {searchFilter(filter).map((reservation) => (
-            <TableRow hover  onDoubleClick={onSelectAllClick}
+            <TableRow hover onDoubleClick = {(e)=> onDoubleClick(e,reservation)}
               key={reservation.email}
               style={{
                 cursor: 'pointer',
               }}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-              <TableCell component="th" scope="row">{reservation.firstName}</TableCell>
+              <TableCell onClick={handleOpen} component="th" scope="row">
+              {reservation.firstName}
+              
+               
+              </TableCell>
               <TableCell component="th" scope="row">{reservation.lastName}</TableCell>
               <TableCell >{reservation.email}</TableCell>
               <TableCell >{reservation.phone}</TableCell>
@@ -116,7 +138,22 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
         </TableBody>
       </Table>
     </TableContainer>
+    <Modal
+          open={open}
+          onClose={(handleClose)}
+          aria-labelledby="modal-modal-title"
+          aria-describedby="modal-modal-description"
+        >
+          <Box sx={style}>
+            <ReservasionDetailsComponent ></ReservasionDetailsComponent>
+          </Box>
+      </Modal>
+      </div>
+  
   );
 }
+
+
+
 
 export default ResultTableComponent
