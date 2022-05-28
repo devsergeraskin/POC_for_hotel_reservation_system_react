@@ -7,6 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+// TYPES
+import {ReservationTypeDetails} from '../types/ReservationTyps';
 
 import {useReservationContextState} from '../customContextsProviders/ReservationContext';
 
@@ -30,37 +32,52 @@ function createData(
     createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
 
-
-
-
-
-
-
   
 interface Props {
     filter: string;
 }
-
-const ResultTableComponent:React.FC<Props> = (Props) =>{
-    const [reservation,setReservation] = useState(null);
+const ResultTableComponent:React.FC<Props> = (props) =>{
+    const { filter } = props;
+    const [reservations,setReservation] = useState<Array<ReservationTypeDetails> | [] >([]);
     const contex = useReservationContextState(); 
 
-    const [test,setTest] = useState(1);
+    // const [test,setTest] = useState(1);
 
     useEffect(() => {
+        if(!contex) 
+            setReservation([])
+        else
         setReservation(contex)
+        // searchFilter(filter);
         console.log(contex);
     }, [contex]);
 
-    const addelement = () => {
-        let result = [];
-        for(let i= 0 ; i <test; i++ ){
-            result.push(<h1 key={i}> {test}</h1>);
-        }
-          return result
+
+    const searchFilter = (keyWord:string) =>{
+      const pattrn = RegExp(keyWord,'igm');
+      if(!keyWord)
+        return reservations;
+      else
+        return reservations.filter((elem) => {
+          const stringy = JSON.stringify(elem);
+          return pattrn.test(stringy);
+        });
     }
+
+
+    const onSelectAllClick = (e: any) =>{
+      console.log(e);
+    }
+
+    // const addelement = () => {
+    //     let result = [];
+    //     for(let i= 0 ; i <test; i++ ){
+    //         result.push(<h1 key={i}> {test}</h1>);
+    //     }
+    //       return result
+    // }
    
-    console.log(Props);
+    // console.log(filter);
 
 
   return  (
@@ -72,27 +89,28 @@ const ResultTableComponent:React.FC<Props> = (Props) =>{
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>First Name</TableCell>
-            <TableCell align="right">Last Name</TableCell>
-            <TableCell align="right">Email</TableCell>
-            <TableCell align="right">Phone</TableCell>
-            <TableCell align="right">Confirm</TableCell>
-            <TableCell align="right">Payment</TableCell>
+            <TableCell> First Name  </TableCell>
+            <TableCell> Last Name   </TableCell>
+            <TableCell> Email       </TableCell>
+            <TableCell> Phone       </TableCell>
+            <TableCell> Confirm     </TableCell>
+            <TableCell> Payment     </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-            >
-              <TableCell component="th" scope="row">
-                {row.name}
-              </TableCell>
-              <TableCell align="right">{row.calories}</TableCell>
-              <TableCell align="right">{row.fat}</TableCell>
-              <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right">{row.protein}</TableCell>
+          {searchFilter(filter).map((reservation) => (
+            <TableRow hover  onDoubleClick={onSelectAllClick}
+              key={reservation.email}
+              style={{
+                cursor: 'pointer',
+              }}
+              sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+              <TableCell component="th" scope="row">{reservation.firstName}</TableCell>
+              <TableCell component="th" scope="row">{reservation.lastName}</TableCell>
+              <TableCell >{reservation.email}</TableCell>
+              <TableCell >{reservation.phone}</TableCell>
+              <TableCell >{reservation.confirm? "yes" : " No"}</TableCell>
+              <TableCell >{reservation.payment}</TableCell>
             </TableRow>
           ))}
         </TableBody>
