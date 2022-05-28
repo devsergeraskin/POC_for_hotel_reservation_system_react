@@ -1,11 +1,11 @@
-import { useContext, createContext } from 'react';
+import {createContext,useMemo } from 'react';
 import TextField from '@mui/material/TextField';
 import ResultTableComponent from './ResultTableComponent'
 import ReservasionDetailsComponent from './ReservasionDetailsComponent';
 
 // SERVICES
 import useReservationFetch from '../dataHooks/useFetch';
-// SERVICES
+// TYPES
 import {ReservationTypeDetails} from '../types/ReservationTyps';
 
 // const ReservationTypeDetailsState:ReservationTypeDetails = {
@@ -64,6 +64,7 @@ const ReservationComponent: React.FC = () =>{
      }
     
     // console.log(data);
+
 
     return (
         <ReservationUserContext.Provider value={data}>
