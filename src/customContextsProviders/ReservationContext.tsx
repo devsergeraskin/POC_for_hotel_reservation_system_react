@@ -40,33 +40,43 @@ type Props = {
 const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
     // the value that will be given to the context
     const [reservation, setReservation] = useState(null);
-
+    // const [dark, setDark] = useState(false);
 
     // // fetch a user from a fake backend API
     // const {data, loading, error} = useReservationFetch('/data/reservations.json')
 
     // //Memo
+    const fetchUser = () => {
+      console.log('AJAX!')
+      axios.get('/data/reservations.json',{ headers: {
+        'Content-Type': 'application/json',
+    }}).then((responce)=>{
+        setReservation(responce.data);
+      })
+      .catch((err)=>{
+      })
+      .finally(()=>{
+      })      
+    };
+
+
     const memo = useMemo(() =>
-      setReservation(reservation),[reservation]
-    );
-
-    
-    
-
-    useEffect(() => {
-      console.log(reservation)
-      const fetchUser = () => {
-        axios.get('/data/reservations.json')
-        .then((responce)=>{
-          setReservation(responce.data);
-        })
-        .catch((err)=>{
-        })
-        .finally(()=>{
-        })      
-      };
-      fetchUser();
-    }, []);
+       fetchUser(),[]);
+    // fetchUser()
+    // useEffect(() => {
+    //   console.log(reservation)
+    //   const fetchUser = () => {
+    //     axios.get('/data/reservations.json')
+    //     .then((responce)=>{
+    //       setReservation(responce.data);
+    //     })
+    //     .catch((err)=>{
+    //     })
+    //     .finally(()=>{
+    //     })      
+    //   };
+    //   fetchUser();
+    // }, []);
    
     // console.log(reservation)
     //  if(loading) return <h1>Loading</h1>;
@@ -78,13 +88,15 @@ const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
     
     // console.log(data);
     // setReservation(data);
-    console.log(reservation);
-   
+    // console.log(reservation);
+        
 
   return (
     // the Provider gives access to the context to its children
     <ReservationContextState.Provider value={reservation}>
       {children}
+      {/* <button onClick={() => setDark(prevDark => !prevDark)}>xxxxxxxxxx</button>
+      <h2>{dark?"1":0}</h2> */}
     </ReservationContextState.Provider>
   );
 };

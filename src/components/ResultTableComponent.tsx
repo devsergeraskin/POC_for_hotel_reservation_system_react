@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect,useState} from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -6,6 +6,11 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+
+
+import {useReservationContextState} from '../customContextsProviders/ReservationContext';
+
+
 
 function createData(
     name: string,
@@ -24,19 +29,55 @@ function createData(
     createData('Cupcake', 305, 3.7, 67, 4.3),
     createData('Gingerbread', 356, 16.0, 49, 3.9),
   ];
+
+
+
+
+
+
+
   
-  
-const ResultTableComponent:React.FC = () =>{
+interface Props {
+    filter: string;
+}
+
+const ResultTableComponent:React.FC<Props> = (Props) =>{
+    const [reservation,setReservation] = useState(null);
+    const contex = useReservationContextState(); 
+
+    const [test,setTest] = useState(1);
+
+    useEffect(() => {
+        setReservation(contex)
+        console.log(contex);
+    }, [contex]);
+
+    const addelement = () => {
+        let result = [];
+        for(let i= 0 ; i <test; i++ ){
+            result.push(<h1 key={i}> {test}</h1>);
+        }
+          return result
+    }
+   
+    console.log(Props);
+
+
   return  (
+    //   <div>
+    //       {addelement()}
+    //       <button  onClick={() => setTest(prev => prev + 1 )}>sada</button>
+    //   </div>
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell>
+            <TableCell>First Name</TableCell>
+            <TableCell align="right">Last Name</TableCell>
+            <TableCell align="right">Email</TableCell>
+            <TableCell align="right">Phone</TableCell>
+            <TableCell align="right">Confirm</TableCell>
+            <TableCell align="right">Payment</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

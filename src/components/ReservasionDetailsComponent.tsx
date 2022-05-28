@@ -1,4 +1,4 @@
-import React, { useContext,useState, useEffect } from 'react';
+import  { useContext,useState, useEffect,useMemo } from 'react';
 
 // DAte Picker
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -24,7 +24,7 @@ import RadioButtonsComponent from './RadioButtonsComponent';
 import {ReservationTypeDetails} from '../types/ReservationTyps';
 
 //CONTEX
-import {ReservationUserContext} from './ReservationComponent';
+import {useReservationContextState} from '../customContextsProviders/ReservationContext';
 
 
 // interface ReservationTypeDetails {
@@ -115,8 +115,8 @@ const PAYMENT_OPTIONS = [
 
 
 const ReservasionDetailsComponent:React.FC = () => {
-    const [value, setValue] = React.useState<Date | null>(new Date());
-    const [reservationDetails, setReservationDetails] = React.useState<ReservationTypeDetails>(ReservationTypeDetailsState)
+    const [value, setValue] = useState<Date | null>(new Date());
+    const [reservationDetails, setReservationDetails] = useState<ReservationTypeDetails>(ReservationTypeDetailsState)
     // console.log(reservationDetails);
     // console.log(new Date("2021-11-18T05:00:00.000Z"));
     // useEffect(() => {    // Update the document title using the browser API   
@@ -125,8 +125,8 @@ const ReservasionDetailsComponent:React.FC = () => {
     // },[]);
 
     // const test:Array<ReservationTypeDetails> | null = useContext(ReservationUserContext);
-    const contex = React.useContext(ReservationUserContext);  
-    console.log(contex);
+    // const contex = useReservationContextState();  
+    // console.log(contex)
 
     const handleChange = (e:any) => {
         const { name, value } = e.target;
@@ -136,6 +136,7 @@ const ReservasionDetailsComponent:React.FC = () => {
             [name]: value
         }));
     };
+    
 
   return (
 
