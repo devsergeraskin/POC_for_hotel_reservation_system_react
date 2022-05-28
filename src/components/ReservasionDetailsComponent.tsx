@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext,useState, useEffect } from 'react';
 
 // DAte Picker
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -20,38 +20,44 @@ import DropDownSelectComponent from './DropDownSelectComponent';
 import RadioButtonsComponent from './RadioButtonsComponent';
 // import DeletableChips from './DeletableChipsComponent';
 
+// APP TYPES
+import {ReservationTypeDetails} from '../types/ReservationTyps';
 
-interface ReservationTypeDetails {
-    stay: {
-        arrivalDate: string,
-        departureDate: string
-    },
-    room: {
-        roomSize: string,
-        roomQuantity: number
-    },
-    firstName: string,
-    lastName: string,
-    email: string,
-    phone: string,
-    addressStreet: {
-        streetName: string,
-        streetNumber: string
-    },
-    addressLocation: {
-        zipCode: string,
-        state: string,
-        city: string
-    },
-    extras: Array<string>
-    payment: string,
-    note: string,
-    tags:Array<string>,
-    reminder: false,
-    newsletter: false,
-    confirm: false
+//CONTEX
+import {ReservationUserContext} from './ReservationComponent';
+
+
+// interface ReservationTypeDetails {
+//     stay: {
+//         arrivalDate: string,
+//         departureDate: string
+//     },
+//     room: {
+//         roomSize: string,
+//         roomQuantity: number
+//     },
+//     firstName: string,
+//     lastName: string,
+//     email: string,
+//     phone: string,
+//     addressStreet: {
+//         streetName: string,
+//         streetNumber: string
+//     },
+//     addressLocation: {
+//         zipCode: string,
+//         state: string,
+//         city: string
+//     },
+//     extras: Array<string>
+//     payment: string,
+//     note: string,
+//     tags:Array<string>,
+//     reminder: false,
+//     newsletter: false,
+//     confirm: false
      
-};
+// };
 
 const ReservationTypeDetailsState:ReservationTypeDetails = {
     "stay": {
@@ -111,12 +117,16 @@ const PAYMENT_OPTIONS = [
 const ReservasionDetailsComponent:React.FC = () => {
     const [value, setValue] = React.useState<Date | null>(new Date());
     const [reservationDetails, setReservationDetails] = React.useState<ReservationTypeDetails>(ReservationTypeDetailsState)
-    console.log(reservationDetails);
-    console.log(new Date("2021-11-18T05:00:00.000Z"));
+    // console.log(reservationDetails);
+    // console.log(new Date("2021-11-18T05:00:00.000Z"));
     // useEffect(() => {    // Update the document title using the browser API   
     //     setValue(new Date("2021-11-19T05:00:00.000Z"));
             
     // },[]);
+
+    // const test:Array<ReservationTypeDetails> | null = useContext(ReservationUserContext);
+    const contex = React.useContext(ReservationUserContext);  
+    console.log(contex);
 
     const handleChange = (e:any) => {
         const { name, value } = e.target;
