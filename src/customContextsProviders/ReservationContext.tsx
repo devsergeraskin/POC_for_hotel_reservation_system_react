@@ -1,10 +1,11 @@
 import {createContext,useContext,useState,useMemo,useEffect} from 'react'
 // SERVICES
-import useReservationFetch from '../dataHooks/useFetch';
+// import useReservationFetch from '../dataHooks/useFetch';
 import axios from "axios";
+import {stateContexType} from '../types/ReservationTyps';
 
-// create context
-const ReservationContextState = createContext(null);
+
+const ReservationContextState = createContext<any>(null);
 // const ReservationContextUpdater = createContext(null);
 
 // context Reservation hook
@@ -37,9 +38,13 @@ type Props = {
   children: JSX.Element,
 };
 
+
 const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
     // the value that will be given to the context
-    const [reservation, setReservation] = useState(null);
+    const [reservation, setReservation] = useState<stateContexType>({
+      reservations:[],
+      selectedReservatio:{}
+    });
     // const [dark, setDark] = useState(false);
 
     // // fetch a user from a fake backend API
@@ -50,8 +55,12 @@ const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
       console.log('AJAX!')
       axios.get('/data/reservations.json',{ headers: {
         'Content-Type': 'application/json',
-    }}).then((responce)=>{
-        setReservation(responce.data);
+      }}).then((responce)=>{
+        setReservation((prevState:stateContexType) => ({
+          ...prevState,
+          reservations: responce.data,
+      }))
+        // setReservation(responce.data);
       })
       .catch((err)=>{
       })
@@ -62,6 +71,7 @@ const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
 
     const memo = useMemo(() =>
        fetchUser(),[]);
+
     // fetchUser()
     // useEffect(() => {
     //   console.log(reservation)
@@ -93,7 +103,7 @@ const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
 
   return (
     // the Provider gives access to the context to its children
-    <ReservationContextState.Provider value={reservation}>
+    <ReservationContextState.Provider value={{reservation,setReservation}}>
       {children}
       {/* <button onClick={() => setDark(prevDark => !prevDark)}>xxxxxxxxxx</button>
       <h2>{dark?"1":0}</h2> */}

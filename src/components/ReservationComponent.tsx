@@ -30,14 +30,8 @@ const ReservationComponent: React.FC = () =>{
             <div>
                 <TextField id="standard-basic" onChange={e => setSeatchKeyWord(e.target.value)} label="Search" variant="standard" />
                 <ResultTableComponent filter={searchKeyWord}></ResultTableComponent>
-                {/* <div className="">
-                <ReservasionDetailsComponent></ReservasionDetailsComponent>
-                </div>*/}
             </div>
         </ReservationContextProvider>
-        // <ReservationUserContext.Provider value={data}>
-     
-        // </ReservationUserContext.Provider>
     )
         
        

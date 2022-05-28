@@ -34,27 +34,27 @@ interface Props {
 const ResultTableComponent:React.FC<Props> = (props) =>{
     const { filter } = props;
 
-    const [reservations,setReservation] = 
-    useState<Array<ReservationTypeDetails>| [] >([]);
+    const [reservations,setReservation] =  useState<Array<ReservationTypeDetails>| [] >([]);
 
-    const [selectedReservation,setSelectedReservation] = 
-    useState<ReservationTypeDetails>();
+    // const [selectedReservation,setSelectedReservation] = 
+    // useState<ReservationTypeDetails>();
+
      // modal
      const [open, setOpen] = useState(false);
      const handleOpen = () => setOpen(true);
      const handleClose = () => setOpen(false);
      // contex
     const contex = useReservationContextState(); 
-
-
+    
+   
     useEffect(() => {
-        if(!contex) 
+        if(!contex.reservation.reservations) 
             setReservation([])
         else
-        setReservation(contex)
+        setReservation(contex.reservation.reservations)
         // searchFilter(filter);
-        console.log(contex);
-    }, [contex]);
+        console.log(contex.reservation.reservations);
+    }, [contex.reservation.reservations]);
 
 
     const searchFilter = (keyWord:string) =>{
@@ -70,9 +70,13 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
 
     const onDoubleClick = (e:any,reservation:ReservationTypeDetails) =>{
       handleOpen();
-      console.log(reservation);
-    }
-
+      contex.setReservation((prevState:any) => ({
+        ...prevState,
+        selectedReservatio: reservation,
+      }))
+  }
+    // console.log(contex);
+    // console.log(contex.reservation.selectedReservatio);
     // const addelement = () => {
     //     let result = [];
     //     for(let i= 0 ; i <test; i++ ){
@@ -123,7 +127,7 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
                 cursor: 'pointer',
               }}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-              <TableCell onClick={handleOpen} component="th" scope="row">
+              <TableCell component="th" scope="row">
               {reservation.firstName}
               
                

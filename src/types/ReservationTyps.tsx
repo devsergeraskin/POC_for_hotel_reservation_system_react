@@ -29,3 +29,9 @@ export interface ReservationTypeDetails {
     confirm: false
      
 };
+
+
+export interface stateContexType {
+    reservations:Array<ReservationTypeDetails> | [],
+    selectedReservatio:ReservationTypeDetails  | object
+  };

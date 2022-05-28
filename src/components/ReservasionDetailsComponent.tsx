@@ -24,7 +24,6 @@ import RadioButtonsComponent from './RadioButtonsComponent';
 import {ReservationTypeDetails} from '../types/ReservationTyps';
 
 //CONTEX
-import {useReservationContextState} from '../customContextsProviders/ReservationContext';
 
 const ReservationTypeDetailsState:ReservationTypeDetails = {
     "stay": {
@@ -97,13 +96,11 @@ const ReservasionDetailsComponent:React.FC = () => {
 
     const handleChange = (e:any) => {
         const { name, value } = e.target;
-        
         setReservationDetails(prevState => ({
             ...prevState,
             [name]: value
         }));
     };
-    
 
   return (
 
@@ -291,7 +288,6 @@ const ReservasionDetailsComponent:React.FC = () => {
                        </Item>
                       
                     </Grid>
-
 
                 </Grid> 
                 </Box>
