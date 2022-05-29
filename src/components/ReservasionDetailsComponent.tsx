@@ -28,46 +28,6 @@ import {ReservationTypeDetails} from '../types/ReservationTyps';
 //CONTEX
 import {useReservationContextState} from '../customContextsProviders/ReservationContext';
 
-const ReservationTypeDetailsState:ReservationTypeDetails = {
-    "stay": {
-        "arrivalDate": "",
-        "departureDate": ""
-    },
-    "room": {
-        "roomSize": "",
-        "roomQuantity": 0
-    },
-    "firstName": "",
-    "lastName": "",
-    "email": "",
-    "phone": "",
-    "addressStreet": {
-        "streetName": "",
-        "streetNumber": ""
-    },
-    "addressLocation": {
-        "zipCode": "",
-        "state": "",
-        "city": ""
-    },
-    "extras": [
-        "extraBreakfast",
-        "extraTV",
-        "extraWiFi",
-        "extraParking",
-        "extraBalcony"
-    ],
-    "payment": "",
-    "note": "",
-    "tags": [
-        "hotel",
-        "booking",
-        "labtest"
-    ],
-    "reminder": false,
-    "newsletter": false,
-    "confirm": false
-}
 
 const Item = styled(Paper)(({ theme }) => ({
     padding: theme.spacing(1),

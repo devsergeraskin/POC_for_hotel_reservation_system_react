@@ -1,9 +1,6 @@
-import {createContext,useContext,useState,useMemo,useEffect} from 'react'
-// SERVICES
-// import useReservationFetch from '../dataHooks/useFetch';
+import {createContext,useContext,useState,useMemo} from 'react'
 import axios from "axios";
 import {stateContexType} from '../types/ReservationTyps';
-
 
 const ReservationContextState = createContext<any>(null);
 
@@ -61,8 +58,10 @@ const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
         // setReservation(responce.data);
       })
       .catch((err)=>{
+
       })
       .finally(()=>{
+        
       })      
     };
 
