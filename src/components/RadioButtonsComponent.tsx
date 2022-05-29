@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect, useState} from 'react';
 import FormControlLabel, {
     FormControlLabelProps,
 } from '@mui/material/FormControlLabel';
@@ -6,6 +6,7 @@ import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
+import Alert from '@mui/material/Alert';
 
 
 interface StyledFormControlLabelProps extends FormControlLabelProps {
@@ -18,7 +19,8 @@ const StyledFormControlLabel = styled((props: StyledFormControlLabelProps) => (
     '.MuiFormControlLabel-label': checked && {
       color: theme.palette.primary.main,
     },
-  }));
+}));
+
 
 function MyFormControlLabel(props: FormControlLabelProps) {
     const radioGroup = useRadioGroup();
@@ -32,15 +34,42 @@ function MyFormControlLabel(props: FormControlLabelProps) {
     return <StyledFormControlLabel checked={checked} {...props} />;
   }
 
+
+  type keyValue = {
+    [key:string]:any,
+  }
 type Props = { options: Array<object>, selectedValue: string };
-const RadioButtonsComponent: React.FC<Props> = (props) => {
+    const RadioButtonsComponent: React.FC<Props> = (props) => {
+    const {options, selectedValue} = props
+    const [isKeyFound, setisKeyFound] = useState(false)
+      
+   
+
+    useEffect(()=>{
+        if(!options.filter((option:keyValue) =>{ return option.key === selectedValue }).length){
+          setisKeyFound(false);
+        }else{
+          setisKeyFound(true);
+        }
+    },[]);
+  
+
+
     return (
-        <RadioGroup row name="use-radio-group" defaultValue={props.selectedValue}>
-          {props.options.map((option:any) => (
-                <MyFormControlLabel key={option.key} value={option.key} label={option.value} control={<Radio />} />
-            ))
+      <div>
+          <RadioGroup row name="use-radio-group" defaultValue={selectedValue}>
+            { options.map((option:any) => (
+                  <MyFormControlLabel key={option.key} value={option.key} label={option.value} control={<Radio />} />
+              ))
+            }
+          </RadioGroup>
+          {
+            !isKeyFound?<Alert severity="error">No Selection Found</Alert>:''
           }
-        </RadioGroup>
+          
+
+      </div>
+       
     )
 }
 export default RadioButtonsComponent;

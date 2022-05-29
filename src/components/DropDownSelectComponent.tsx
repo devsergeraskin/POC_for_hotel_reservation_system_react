@@ -4,30 +4,42 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-type Props = { options: Array<object>, selectedValue: string };
-const DropDownSelectComponent:React.FC<Props> = (props:any) =>{
-    const [age, setAge] = React.useState('');
+
+
+type Props = { 
+  setStaet:(key:string, value:string) => void   //pass funciton
+  ,options:Array<string>
+  ,selectedValue: string
+  ,title: string | null
+  ,readOnly?:boolean
+  ,objectKey:string
+};  
+
+const DropDownSelectComponent:React.FC<Props> = (props) =>{
+    const { setStaet, options, selectedValue, title, readOnly, objectKey} = props;
 
     const handleChange = (event: SelectChangeEvent) => {
-      setAge(event.target.value);
+      if(!readOnly){
+        setStaet(objectKey ,event.target.value);
+      }
     };
     return (
       <div>
         <FormControl variant="standard" sx={{ m: 1, minWidth: 100 ,  width: '100%'}}>
-          <InputLabel id="demo-simple-select-standard-label">Age</InputLabel>
+          <InputLabel id="demo-simple-select-standard-label">{title}</InputLabel>
           <Select
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
-            value={age}
+            defaultValue={selectedValue}
+            value={selectedValue || options[0] }
             onChange={handleChange}
-            label="Age"
+            label={title}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            <MenuItem value={10}>Ten</MenuItem>
-            <MenuItem value={20}>Twenty</MenuItem>
-            <MenuItem value={30}>Thirty</MenuItem>
+            {
+              options.map((option,index) =>{
+               return  <MenuItem key={option} value={option}> {option}</MenuItem>
+              })
+            }
           </Select>
         </FormControl>
       </div>

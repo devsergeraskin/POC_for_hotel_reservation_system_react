@@ -6,18 +6,16 @@ import {stateContexType} from '../types/ReservationTyps';
 
 
 const ReservationContextState = createContext<any>(null);
-// const ReservationContextUpdater = createContext(null);
+
 
 // context Reservation hook
 const useReservationContextState = () => {
   // get the context
   const context = useContext(ReservationContextState);
-
   // if `undefined`, throw an error
   if (context === undefined) {
     throw new Error("useUserContextState was used outside of its Provider");
   }
-
   return context;
 };
 

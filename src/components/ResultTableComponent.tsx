@@ -14,19 +14,7 @@ import {ReservationTypeDetails} from '../types/ReservationTyps';
 // CONTEXT
 import {useReservationContextState} from '../customContextsProviders/ReservationContext';
 
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  height: '100%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  overflow: 'scroll',
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+
 
 interface Props {
     filter: string;
@@ -34,7 +22,7 @@ interface Props {
 const ResultTableComponent:React.FC<Props> = (props) =>{
     const { filter } = props;
 
-    const [reservations,setReservation] =  useState<Array<ReservationTypeDetails>| [] >([]);
+    // const [reservations,setReservation] = useState<Array<ReservationTypeDetails>| [] >([]);
 
     // const [selectedReservation,setSelectedReservation] = 
     // useState<ReservationTypeDetails>();
@@ -46,23 +34,23 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
      // contex
     const contex = useReservationContextState(); 
     
-   
+    console.log(contex)
     useEffect(() => {
-        if(!contex.reservation.reservations) 
-            setReservation([])
-        else
-        setReservation(contex.reservation.reservations)
-        // searchFilter(filter);
-        console.log(contex.reservation.reservations);
-    }, [contex.reservation.reservations]);
+        // if(!contex.reservation.reservations) 
+        //     setReservation([])
+        // else
+        // setReservation(contex.reservation.reservations)
+        // // searchFilter(filter);
+        // console.log(contex.reservation.reservations);
+    }, [contex]);
 
 
     const searchFilter = (keyWord:string) =>{
       const pattrn = RegExp(keyWord,'igm');
       if(!keyWord)
-        return reservations;
+        return contex.reservation.reservations;
       else
-        return reservations.filter((elem) => {
+        return contex.reservation.reservations.filter((elem:ReservationTypeDetails) => {
           const stringy = JSON.stringify(elem);
           return pattrn.test(stringy);
         });
@@ -70,13 +58,12 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
 
     const onDoubleClick = (e:any,reservation:ReservationTypeDetails) =>{
       handleOpen();
-      contex.setReservation((prevState:any) => ({
-        ...prevState,
-        selectedReservatio: reservation,
-      }))
-  }
-    // console.log(contex);
-    // console.log(contex.reservation.selectedReservatio);
+      contex.setReservation((previousState:any) =>{
+        return { ...previousState, selectedReservatio: reservation }
+      });
+      console.log(reservation);
+    }
+
     // const addelement = () => {
     //     let result = [];
     //     for(let i= 0 ; i <test; i++ ){
@@ -88,76 +75,68 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
     // console.log(filter);
 
   return  (
-   
-      // <div>
-      //     {/* {addelement()}
-      //     <button  onClick={() => setTest(prev => prev + 1 )}>sada</button> */}
-      //       <button  onClick={handleOpen} >sada</button> 
-      //          <Modal
-      //              open={open}
-      //              onClose={(handleClose)}
-      //              aria-labelledby="modal-modal-title"
-      //              aria-describedby="modal-modal-description"
-      //            >
-      //              <Box sx={style}>
-      //                <ReservasionDetailsComponent></ReservasionDetailsComponent>
-      //              </Box>
-             
-      //          </Modal>
-      // </div>
       <div>
-
-<TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell> First Name  </TableCell>
-            <TableCell> Last Name   </TableCell>
-            <TableCell> Email       </TableCell>
-            <TableCell> Phone       </TableCell>
-            <TableCell> Confirm     </TableCell>
-            <TableCell> Payment     </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {searchFilter(filter).map((reservation) => (
-            <TableRow hover onDoubleClick = {(e)=> onDoubleClick(e,reservation)}
-              key={reservation.email}
-              style={{
-                cursor: 'pointer',
-              }}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
-              <TableCell component="th" scope="row">
-              {reservation.firstName}
-              
-               
-              </TableCell>
-              <TableCell component="th" scope="row">{reservation.lastName}</TableCell>
-              <TableCell >{reservation.email}</TableCell>
-              <TableCell >{reservation.phone}</TableCell>
-              <TableCell >{reservation.confirm? "yes" : " No"}</TableCell>
-              <TableCell >{reservation.payment}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    <Modal
-          open={open}
-          onClose={(handleClose)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <Box sx={style}>
-            <ReservasionDetailsComponent ></ReservasionDetailsComponent>
-          </Box>
-      </Modal>
+        <TableContainer component={Paper}>
+              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell> First Name  </TableCell>
+                    <TableCell> Last Name   </TableCell>
+                    <TableCell> Email       </TableCell>
+                    <TableCell> Phone       </TableCell>
+                    <TableCell> Confirm     </TableCell>
+                    <TableCell> Payment     </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {searchFilter(filter).map((reservation:ReservationTypeDetails) => (
+                    <TableRow hover onDoubleClick = {(e)=> onDoubleClick(e,reservation)}
+                      key={reservation.email}
+                      style={{
+                        cursor: 'pointer',
+                      }}
+                      sx={{ '&:last-child td, &:last-child th': { border: 0 } }} >
+                      <TableCell  component="th" scope="row">
+                      {reservation.firstName}
+                      </TableCell>
+                      <TableCell component="th" scope="row">{reservation.lastName}</TableCell>
+                      <TableCell >{reservation.email}</TableCell>
+                      <TableCell >{reservation.phone}</TableCell>
+                      <TableCell >{reservation.confirm? "yes" : " No"}</TableCell>
+                      <TableCell >{reservation.payment}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Modal
+                  open={open}
+                  onClose={(handleClose)}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <ReservasionDetailsComponent ></ReservasionDetailsComponent>
+                  </Box>
+              </Modal>
       </div>
-  
   );
 }
 
-
-
+// module s tyle
+const style = {
+  position: 'absolute' as 'absolute',
+  top: '50%',
+  left: '50%',
+  height: '100%',
+  transform: 'translate(-50%, -50%)',
+  width: '85%',
+  maxWidth:'1200px',
+  overflow: 'scroll',
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 export default ResultTableComponent
