@@ -33,12 +33,12 @@ type Props = {
   children: JSX.Element,
 };
 
-
 const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
     // the value that will be given to the context
     const [reservation, setReservation] = useState<stateContexType>({
       reservations:[],
-      selectedReservatio:{}
+      selectedReservatio:{},
+      page:0
     });
     // const [dark, setDark] = useState(false);
 
@@ -66,8 +66,8 @@ const ReservationContextProvider :  React.FC<Props> =  ({children}) => {
     };
 
 
-    const memo = useMemo(() =>
-       fetchUser(),[]);
+    useMemo(() =>
+       fetchUser(),[reservation.page]);
 
     // fetchUser()
     // useEffect(() => {

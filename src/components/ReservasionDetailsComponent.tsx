@@ -1,5 +1,4 @@
-import  { useState, useEffect} from 'react';
-
+import  { useState} from 'react';
 // DAte Picker
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -42,22 +41,11 @@ const PAYMENT_OPTIONS = [
     {key:"bitCoin",value:"Bit Coin"}
 ]
 
-// const PAYMENT_OPTIONS = {
-//     creditCard:"Credit Card",
-//     payPal:"Pay Pal",
-//     cash:"Cash",
-//     bitCoin:"Bit Coin"}
-// }
-
 
 
 const ReservasionDetailsComponent:React.FC = () => {
-    // const [value, setValue] = useState<Date | null>(new Date());
-    // const [reservationDetails, setReservationDetails] = useState<ReservationTypeDetails>(ReservationTypeDetailsState)
     const contex = useReservationContextState();
-    // console.log('selected' , contex.reservation.selectedReservatio)
     const [reservation, setReservation] = useState<ReservationTypeDetails>(contex.reservation.selectedReservatio)
-    console.log('selectedData' , reservation);
 
     const handleChange = (e:any) => {
         const { name, value } = e.target;
@@ -290,7 +278,6 @@ const ReservasionDetailsComponent:React.FC = () => {
                     </Grid> 
             </Box>
         </LocalizationProvider>
-  
    
   )
 }

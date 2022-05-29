@@ -1,10 +1,9 @@
-import React, {HtmlHTMLAttributes, ReactEventHandler, useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import FormControlLabel, {
     FormControlLabelProps,
 } from '@mui/material/FormControlLabel';
 import RadioGroup, { useRadioGroup } from '@mui/material/RadioGroup';
 import { styled } from '@mui/material/styles';
-import Paper from '@mui/material/Paper';
 import Radio from '@mui/material/Radio';
 import Alert from '@mui/material/Alert';
 
@@ -35,13 +34,11 @@ function MyFormControlLabel(props: FormControlLabelProps) {
   }
 
 
-type keyValue = 
-{
+type keyValue = {
   [key:string]:any,
 }
 
-type Props = 
-{ 
+type Props = { 
   options: Array<object>,
    selectedValue: string 
    onChange:(key:string, value:any) => void,
@@ -66,7 +63,6 @@ const RadioButtonsComponent: React.FC<Props> = (props) => {
     const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       setKeyFound(true);
-      // setCarrentValue(value);
       onChange(objectKey, value);
     };
 

@@ -58,16 +58,6 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
       console.log(reservation);
     }
 
-    // const addelement = () => {
-    //     let result = [];
-    //     for(let i= 0 ; i <test; i++ ){
-    //         result.push(<h1 key={i}> {test}</h1>);
-    //     }
-    //       return result
-    // }
-   
-    // console.log(filter);
-
   return  (
       <div>
         <TableContainer component={Paper}>

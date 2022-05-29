@@ -9,16 +9,9 @@ import ReservationComponent from './components/ReservationComponent';
 function App() {
   return (
     <div className="App">
-      {/* <header className="App-header">
-        <nav className="navbar navbar-light bg-light">
-          <div className="container">
-            <a className="navbar-brand" href="#">
-            </a>
-          </div>
-        </nav>
-      </header> */}
       <div className="container ">
         <ReservationComponent></ReservationComponent>
+        <h2>MADE BY SERGEY RASKIN</h2>
       </div>
     </div>
   );

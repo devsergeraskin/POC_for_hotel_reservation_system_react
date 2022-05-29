@@ -33,5 +33,6 @@ export interface ReservationTypeDetails {
 
 export interface stateContexType {
     reservations:Array<ReservationTypeDetails> | [],
-    selectedReservatio:ReservationTypeDetails  | object
+    selectedReservatio:ReservationTypeDetails  | object,
+    page:number
   };
