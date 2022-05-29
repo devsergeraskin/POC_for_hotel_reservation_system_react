@@ -36,12 +36,6 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
     
     console.log(contex)
     useEffect(() => {
-        // if(!contex.reservation.reservations) 
-        //     setReservation([])
-        // else
-        // setReservation(contex.reservation.reservations)
-        // // searchFilter(filter);
-        // console.log(contex.reservation.reservations);
     }, [contex]);
 
 
@@ -113,8 +107,7 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
                   open={open}
                   onClose={(handleClose)}
                   aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
+                  aria-describedby="modal-modal-description">
                   <Box sx={style}>
                     <ReservasionDetailsComponent ></ReservasionDetailsComponent>
                   </Box>
