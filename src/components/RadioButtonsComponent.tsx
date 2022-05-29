@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import React, {HtmlHTMLAttributes, ReactEventHandler, useEffect, useState} from 'react';
 import FormControlLabel, {
     FormControlLabelProps,
 } from '@mui/material/FormControlLabel';
@@ -35,36 +35,55 @@ function MyFormControlLabel(props: FormControlLabelProps) {
   }
 
 
-  type keyValue = {
-    [key:string]:any,
-  }
-type Props = { options: Array<object>, selectedValue: string };
-    const RadioButtonsComponent: React.FC<Props> = (props) => {
-    const {options, selectedValue} = props
-    const [isKeyFound, setisKeyFound] = useState(false)
-      
-   
+type keyValue = 
+{
+  [key:string]:any,
+}
 
+type Props = 
+{ 
+  options: Array<object>,
+   selectedValue: string 
+   onChange:(key:string, value:any) => void,
+   objectKey:string
+}
+
+const RadioButtonsComponent: React.FC<Props> = (props) => {
+    const {options, selectedValue, onChange, objectKey} = props
+    const [currentValue, setCarrentValue] = useState(selectedValue);
+    const [isKeyFound, setKeyFound] = useState(false)
+   
+      // Validation
     useEffect(()=>{
         if(!options.filter((option:keyValue) =>{ return option.key === selectedValue }).length){
-          setisKeyFound(false);
+          setKeyFound(false);
         }else{
-          setisKeyFound(true);
+          setKeyFound(true);
         }
     },[]);
-  
 
+    
+    const handleChange = (event:React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value;
+      setKeyFound(true);
+      // setCarrentValue(value);
+      onChange(objectKey, value);
+    };
 
     return (
       <div>
-          <RadioGroup row name="use-radio-group" defaultValue={selectedValue}>
+          <RadioGroup row name="use-radio-group" 
+          defaultValue={currentValue}
+          onChange={handleChange}
+          >
             { options.map((option:any) => (
-                  <MyFormControlLabel key={option.key} value={option.key} label={option.value} control={<Radio />} />
+                  <MyFormControlLabel key={option.key} value={option.key} label={option.value} 
+                  control={<Radio />} />
               ))
             }
           </RadioGroup>
           {
-            !isKeyFound?<Alert severity="error">No Selection Found</Alert>:''
+            !isKeyFound?<Alert severity="error">No Selection</Alert>:''
           }
           
 

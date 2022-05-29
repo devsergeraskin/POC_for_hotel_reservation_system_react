@@ -39,7 +39,7 @@ const PAYMENT_OPTIONS = [
     {key:"creditCard",value:"Credit Card"},
     {key:"payPal",value:"Pay Pal"},
     {key:"cash",value:"Cash"},
-    {key:"BitCoin",value:"Bit Coin"}
+    {key:"bitCoin",value:"Bit Coin"}
 ]
 
 // const PAYMENT_OPTIONS = {
@@ -75,6 +75,16 @@ const ReservasionDetailsComponent:React.FC = () => {
         }));
     };
 
+
+    const updateDate = (obkectKey:string,valueKey:string,value:any) => {
+        const arrivalDate:any = {...reservation.stay, [valueKey]:value}
+        setReservation((prevState:ReservationTypeDetails) => ({
+            ...prevState,
+           [obkectKey]:arrivalDate
+        }));
+       console.log(value)
+    };
+
   return (
 
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -93,7 +103,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                                     label="Date of Arrival"
                                     value={reservation.stay.arrivalDate}
                                     onChange={(newValue) => {
-                                       
+                                        updateDate('stay','arrivalDate',newValue,);
                                     }}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                     /> 
@@ -105,7 +115,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                                     label="Date of Departure"
                                     value={reservation.stay.departureDate}
                                     onChange={(newValue) => {
-                                       
+                                        updateDate('stay','departureDate',newValue,);
                                     }}
                                     renderInput={(params) => <TextField {...params} helperText={null} />}
                                 />
@@ -242,7 +252,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                         <Grid item xs={12} direction="row" container justifyContent="flex-start">
                             <Item  elevation={0}>
                                 {/* {produceRadioButtons(PAYMENT_OPTIONS,'cash')} */}
-                                <RadioButtonsComponent options={PAYMENT_OPTIONS}  selectedValue={reservation.payment} ></RadioButtonsComponent>
+                                <RadioButtonsComponent onChange={updateState} objectKey={"payment"} options={PAYMENT_OPTIONS}  selectedValue={reservation.payment} ></RadioButtonsComponent>
                                 {/*@PAYMENT_OPTIONS {key:"cash",value:"Cash"}, */}
                             </Item>
                         </Grid>
@@ -264,7 +274,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                         {/* TAGS*/}
                         <Grid item xs={12} direction="row" container justifyContent="flex-start">
                             <Item  elevation={0}>
-                                <DeletableChips  tags={reservation.tags} ></DeletableChips>
+                                <DeletableChips  onChange={updateState} objectKey={"tags"}  tags={reservation.tags} ></DeletableChips>
                             </Item>
                         </Grid>
                        
