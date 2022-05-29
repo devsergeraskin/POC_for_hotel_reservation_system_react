@@ -92,25 +92,13 @@ const PAYMENT_OPTIONS = [
 
 
 const ReservasionDetailsComponent:React.FC = () => {
-    const [value, setValue] = useState<Date | null>(new Date());
-    const [reservationDetails, setReservationDetails] = useState<ReservationTypeDetails>(ReservationTypeDetailsState)
-    // console.log(reservationDetails);
-    // console.log(new Date("2021-11-18T05:00:00.000Z"));
-    // useEffect(() => {    // Update the document title using the browser API   
-    //     setValue(new Date("2021-11-19T05:00:00.000Z"));
-            
-    // },[]);
-  
-    // const test:Array<ReservationTypeDetails> | null = useContext(ReservationUserContext);
-    // const contex = useReservationContextState();  
-    // console.log(contex)
-
+    // const [value, setValue] = useState<Date | null>(new Date());
+    // const [reservationDetails, setReservationDetails] = useState<ReservationTypeDetails>(ReservationTypeDetailsState)
     const contex = useReservationContextState();
     // console.log('selected' , contex.reservation.selectedReservatio)
     const [reservation, setReservation] = useState<ReservationTypeDetails>(contex.reservation.selectedReservatio)
 
-    
-    console.log('selectedData' , reservation)
+    console.log('selectedData' , reservation);
 
     const handleChange = (e:any) => {
         const { name, value } = e.target;
@@ -137,8 +125,7 @@ const ReservasionDetailsComponent:React.FC = () => {
                         direction="row"
                         justifyContent="flex-start"
                         alignItems="flex-start"
-                        spacing={2}
-    >
+                        spacing={2}>
                         <Grid item xs={12} direction="row" container justifyContent="flex-start">
                             <Item  elevation={0}>
                                 <DatePicker
