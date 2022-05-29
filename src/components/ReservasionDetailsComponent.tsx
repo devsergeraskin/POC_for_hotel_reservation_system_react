@@ -57,7 +57,6 @@ const ReservasionDetailsComponent:React.FC = () => {
     const contex = useReservationContextState();
     // console.log('selected' , contex.reservation.selectedReservatio)
     const [reservation, setReservation] = useState<ReservationTypeDetails>(contex.reservation.selectedReservatio)
-
     console.log('selectedData' , reservation);
 
     const handleChange = (e:any) => {
@@ -69,8 +68,8 @@ const ReservasionDetailsComponent:React.FC = () => {
     };
 
     // name : is name of the filed of array
-    const updateState = (key:string,value:string) => {
-        setReservation(prevState => ({
+    const updateState = (key:string,value:any) => {
+        setReservation((prevState:ReservationTypeDetails) => ({
             ...prevState,
             [key]: value
         }));
@@ -117,15 +116,20 @@ const ReservasionDetailsComponent:React.FC = () => {
                             <Item  elevation={0}>
                             <TextField defaultValue={reservation.room.roomSize}
                                     id="outlined-helperText"
-                                    label="Room Quantity"
-                                    helperText="Maximum:5"
+                                    label="Room Size"
+                                    onChange={handleChange}
                                     />
                             </Item>
                             <Item  elevation={0}>
                                 <TextField defaultValue={reservation.room.roomQuantity}
                                     id="outlined-helperText"
                                     label="Room Quantity"
+                                    type="number"
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
                                     helperText="Maximum:5"
+                                    onChange={handleChange}
                                     />
                             </Item>        
                         </Grid>
@@ -267,9 +271,9 @@ const ReservasionDetailsComponent:React.FC = () => {
                         <Grid item xs={12} direction="column" container justifyContent="flex-basis">
                             <Item  elevation={0}>
                                 <FormGroup>
-                                    <FormControlLabel control={<Switch checked={reservation.reminder} />} label="Send Me a remainder" />
-                                    <FormControlLabel control={<Switch checked={reservation.newsletter} />} label="Subscribe to newsletter" />
-                                    <FormControlLabel control={<Checkbox checked={reservation.confirm} />} label="I confirm the information given above" />
+                                    <FormControlLabel control={<Switch onChange={e => updateState('reminder',!reservation.reminder)} checked={reservation.reminder} />} label="Send Me a remainder" />
+                                    <FormControlLabel control={<Switch onChange={e => updateState('newsletter',!reservation.newsletter)} checked={reservation.newsletter} />} label="Subscribe to newsletter" />
+                                    <FormControlLabel control={<Checkbox  onChange={e => updateState('confirm',!reservation.confirm)}  checked={reservation.confirm} />} label="I confirm the information given above" />
                                 </FormGroup>
                             </Item>
                         </Grid>
