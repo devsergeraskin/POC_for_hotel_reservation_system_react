@@ -1,53 +1,37 @@
+/**
+ * I know this is not perfict unit testing, but it is my first time to use Jest and React.
+ * It is my first day of using it :), I will be better with a pracitce :).
+ */
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { ReservationContextState, useReservationContextState } from '../../customContextsProviders/ReservationContext';
-import {stateContexType,stateContexTypeUseState} from '../../types/ReservationTyps'
+import { render, screen } from '@testing-library/react';
+import { ReservationContextState,  } from '../../customContextsProviders/ReservationContext';
+import {stateContexTypeUseState,ReservationTypeDetails} from '../../types/ReservationTyps'
 import {ReservationMook} from './mocks/ReservationMook.mook';
+import ResultTableComponent from '../ResultTableComponent';
 
-const mockData = ReservationMook;
+const mockData:Array<ReservationTypeDetails> = ReservationMook;
 
 const customRender = (ui:JSX.Element, context:stateContexTypeUseState) => {
     return render(
         <ReservationContextState.Provider value={context}>{ui}</ReservationContextState.Provider>
-    )
-  }
-
+    )}
 describe('<ReservationContext/>', () => {
+    const reservation:stateContexTypeUseState = {
+        reservation:{
+            reservations:mockData,
+            selectedReservatio:{},
+            page:0
+        },
+        setReservation:(reservation) =>{
+            reservation.selectedReservatio = reservation
+        }
+    };
 
-    it('ReservationContextState', () => {
-        expect(true).toBe(true);
+    it('ReservationContextState.Provider + useUserContextState', () => {
+        customRender(<ResultTableComponent filter=''/>, reservation)   
+        const table = screen.getByTestId("reservationResultTableTbody");
+        expect(table).toBeTruthy();
+        expect(table.rows.length).toBe(2);
     });
-
-    it('useReservationContextState', () => {
-        expect(true).toBe(true);
-    });
-
-    it('<ReservationContextState/>', () => {
-        expect(true).toBe(true);
-    });
-
 })
-
-
-
-
-// import {
-//     ReservationContextState, 
-//     useReservationContextState , 
-//     ReservationContextProvider} from '../../customContextsProviders/ReservationContext';
-
-
-
-
-// describe("xxx",() => {
-//     it("x", ()=>{
-//         const TestComponent = () =>{
-//             const {reservations,selectedReservatio,page} = useReservationContextState();
-
-//             return (
-//                 <div>lol</div>
-//             ) 
-//         }
-//     })
-// })

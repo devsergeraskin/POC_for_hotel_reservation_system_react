@@ -1,3 +1,6 @@
+// THIS IS THE AJAX HOOK,
+// !IMPORTANT:  NOT IN USE!  TEST NOT COVERED!
+// I LEAVE IT HEARE SO FOR THEN NEXT TIME WHEN IT NEEDE.
 import {useEffect, useState} from 'react';
 import axios from "axios";
 

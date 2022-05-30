@@ -22,12 +22,12 @@ const DropDownSelectComponent:React.FC<Props> = (props) =>{
         setStaet(objectKey ,event.target.value);
       }
     };
-    
+  
     return (
       <div>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 100 ,  width: '100%'}}>
+        <FormControl  data-testid="dropDownSelectComponent" variant="standard" sx={{ m: 1, minWidth: 100 ,  width: '100%'}}>
           <InputLabel id="demo-simple-select-standard-label">{title}</InputLabel>
-          <Select
+          <Select 
             labelId="demo-simple-select-standard-label"
             id="demo-simple-select-standard"
             defaultValue={selectedValue}

@@ -39,7 +39,7 @@ type keyValue = {
 }
 
 type Props = { 
-  options: Array<object>,
+   options: Array<object>,
    selectedValue: string 
    onChange:(key:string, value:any) => void,
    objectKey:string
@@ -66,15 +66,16 @@ const RadioButtonsComponent: React.FC<Props> = (props) => {
       onChange(objectKey, value);
     };
 
+
     return (
       <div>
           <RadioGroup row name="use-radio-group" 
+          data-testid="radioButtonsComponent"
           defaultValue={currentValue}
-          onChange={handleChange}
           >
-            { options.map((option:any) => (
-                  <MyFormControlLabel key={option.key} value={option.key} label={option.value} 
-                  control={<Radio />} />
+            { options.map((option:any,index) => (
+                  <MyFormControlLabel   key={option.key} value={option.key} label={option.value} 
+                  control={<Radio  data-testid={"radioButtonsselection-" + index}  onChange={handleChange}/>} />
               ))
             }
           </RadioGroup>

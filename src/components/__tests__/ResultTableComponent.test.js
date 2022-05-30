@@ -1,3 +1,7 @@
+/**
+ * I know this is not perfict unit testing, but it is my first time to use Jest and React.
+ * It is my first day of using it :), I will be better with a pracitce :).
+ */
 import React from 'react';
 import { render, screen,fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
@@ -48,16 +52,12 @@ describe("<ResultTableComponent/>",() => {
 					selectedReservatio:{},
 					page:0
 				},
-				setReservation:(comingReservation) =>{ //todo fix this
-					// console.log('---------------',comingReservation)
-					reservation.reservation.selectedReservatio = mockData[0];	//HardCoded
-					// console.log('XXXXXXXXXXXXXXXreservation',reservation)
+				setReservation:(comingReservation) =>{ 
+					reservation.reservation.selectedReservatio = mockData[0];	
 				}
 			};
 			customRender(<ResultTableComponent  filter=''/>, reservation)
 			const table = screen.getByTestId("reservationResultTableTbody");
-			
-			console.log(reservation);
 			fireEvent.doubleClick(table.rows[0])
 			const module = screen.getByTestId("reservationResultDetailsModule");
 			expect(module).toBeTruthy();

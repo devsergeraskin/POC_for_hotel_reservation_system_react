@@ -36,3 +36,8 @@ export interface stateContexType {
     selectedReservatio:ReservationTypeDetails  | object,
     page:number
   };
+
+export interface stateContexTypeUseState {
+    reservation:stateContexType
+    setReservation:(...params:any)=>void,
+};

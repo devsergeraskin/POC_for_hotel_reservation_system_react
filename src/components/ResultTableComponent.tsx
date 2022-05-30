@@ -102,10 +102,7 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
 }
 
 
-
-
-
-// module s tyle
+// module style
 const style = {
   position: 'absolute' as 'absolute',
   top: '50%',
