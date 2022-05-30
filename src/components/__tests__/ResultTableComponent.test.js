@@ -61,11 +61,7 @@ describe("<ResultTableComponent/>",() => {
 			fireEvent.doubleClick(table.rows[0])
 			const module = screen.getByTestId("reservationResultDetailsModule");
 			expect(module).toBeTruthy();
-			
-			// expect(table.rows.length).toBe(0);
 		})
 
 	})
 })
-
-// done
