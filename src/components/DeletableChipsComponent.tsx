@@ -9,21 +9,13 @@ type Props = {
   objectKey:string
 }
 
-const DeletableChips: React.FC<Props> = (props) => {
-  const { tags,onChange,objectKey } = props;
-  // const handleDelete = (e:any) => {
-  //   console.log(e.target)
-  //   onChange(key,[])
-  //   console.info('You clicked the delete icon.');
-  // };
+const DeletableChips: React.FC<Props> = ({ tags, onChange, objectKey }) => {
+
   const handleDelete = (deletedTag:string) => () => {
     const filtred = tags.filter((tag) => {return tag !== deletedTag});
     onChange(objectKey,filtred)
   };
-  
 
-
-  console.log(props);
   return (
     <div>
       <label>Tags</label>

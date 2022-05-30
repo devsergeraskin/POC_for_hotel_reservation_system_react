@@ -21,20 +21,16 @@ interface Props {
 }
 const ResultTableComponent:React.FC<Props> = (props) =>{
     const { filter } = props;
-
-    // const [reservations,setReservation] = useState<Array<ReservationTypeDetails>| [] >([]);
-
-    // const [selectedReservation,setSelectedReservation] = 
-    // useState<ReservationTypeDetails>();
+    // contex
+    const contex = useReservationContextState(); 
+    const {reservation,setReservation} = contex; 
 
      // modal
      const [open, setOpen] = useState(false);
      const handleOpen = () => setOpen(true);
      const handleClose = () => setOpen(false);
-     // contex
-    const contex = useReservationContextState(); 
-    
-    console.log(contex)
+
+
     useEffect(() => {
     }, [contex]);
 
@@ -42,9 +38,9 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
     const searchFilter = (keyWord:string) =>{
       const pattrn = RegExp(keyWord,'igm');
       if(!keyWord)
-        return contex.reservation.reservations;
+        return reservation.reservations;
       else
-        return contex.reservation.reservations.filter((elem:ReservationTypeDetails) => {
+        return reservation.reservations.filter((elem:ReservationTypeDetails) => {
           const stringy = JSON.stringify(elem);
           return pattrn.test(stringy);
         });
@@ -55,13 +51,12 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
       contex.setReservation((previousState:any) =>{
         return { ...previousState, selectedReservatio: reservation }
       });
-      console.log(reservation);
     }
 
   return  (
       <div>
-        <TableContainer component={Paper}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <TableContainer component={Paper} data-testid="reservationResultTableContainer">
+              <Table sx={{ minWidth: 650 }} data-testid="reservationResultTable" aria-label="simple table">
                 <TableHead>
                   <TableRow>
                     <TableCell> First Name  </TableCell>
@@ -72,7 +67,7 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
                     <TableCell> Payment     </TableCell>
                   </TableRow>
                 </TableHead>
-                <TableBody>
+                <TableBody data-testid="reservationResultTableTbody">
                   {searchFilter(filter).map((reservation:ReservationTypeDetails) => (
                     <TableRow hover onDoubleClick = {(e)=> onDoubleClick(e,reservation)}
                       key={reservation.email}
@@ -98,13 +93,17 @@ const ResultTableComponent:React.FC<Props> = (props) =>{
                   onClose={(handleClose)}
                   aria-labelledby="modal-modal-title"
                   aria-describedby="modal-modal-description">
-                  <Box sx={style}>
-                    <ReservasionDetailsComponent ></ReservasionDetailsComponent>
+                  <Box sx={style} data-testid="reservationResultDetailsModule">
+                    <ReservasionDetailsComponent  ></ReservasionDetailsComponent>
                   </Box>
               </Modal>
       </div>
   );
 }
+
+
+
+
 
 // module s tyle
 const style = {

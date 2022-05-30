@@ -1,4 +1,4 @@
-[
+const ReservationMook = [
 	{
 	  "stay": {
 		"arrivalDate": "2021-11-18T05:00:00.000Z",
@@ -76,4 +76,7 @@
 	  "newsletter": false,
 	  "confirm": true
 	}
-}
+
+]
+
+export { ReservationMook };
