@@ -12,7 +12,6 @@ type Props = {
 const DeletableChips: React.FC<Props> = ({ tags, onChange, objectKey }) => {
 
   const handleDelete = (deletedTag:string) => () => {
-    console.log('COMING FROM COMPONENT IT SELF',deletedTag)
     const filtred = tags.filter((tag) => {return tag !== deletedTag});
     onChange(objectKey,filtred)
   };

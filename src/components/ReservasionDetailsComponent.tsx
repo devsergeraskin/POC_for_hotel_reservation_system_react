@@ -70,12 +70,11 @@ const ReservasionDetailsComponent:React.FC = () => {
             ...prevState,
            [obkectKey]:arrivalDate
         }));
-       console.log(value)
     };
 
   return (
 
-        <LocalizationProvider dateAdapter={AdapterDateFns}>
+        <LocalizationProvider dateAdapter={AdapterDateFns}  data-testid="reservasionDetailsComponent" >
             <Box sx={{ flexGrow: 1 }}>
                     <Grid
                         container
